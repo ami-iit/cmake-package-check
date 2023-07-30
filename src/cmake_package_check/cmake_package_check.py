@@ -33,7 +33,7 @@ def cmake_package_check(CMakePackageNames):
         print("===================================")
         print("=== CMake configure output:        ")
         print("===================================")
-        subprocess.run(['cmake','-S.', '-B.'], cwd=temp_dir, check=True)
+        subprocess.run(['cmake','-jNinja','-S.', '-B.'], cwd=temp_dir, check=True)
 
     except subprocess.CalledProcessError as e:
         print(f"Error occurred: {e}")

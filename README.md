@@ -26,9 +26,19 @@ To check if the CMake package `fmt` is installed and can be found by the CMake, 
 cmake-package-check fmt
 ```
 
-The command output will end with `cmake-package-check: SUCCESS.` if the package can be found, and with `cmake-package-check: FAILURE.` . In case of success the return value of the command will be 0, while it will be 1 if the package can't be found. This permits to use the command in the context of continuous integration scripts.
+The command output will end with `cmake-package-check: SUCCESS.` if the package can be found (i.e. `find_package(fmt REQUIRED)` is successful), and with `cmake-package-check: FAILURE.` . In case of success the return value of the command will be 0, while it will be 1 if the package can't be found. This permits to use the command in the context of continuous integration scripts.
 
 **Note: on Windows, the command needs to run in Developer Command Prompt or Developer Powershell.**
+
+### Check if a multiple packages exist
+
+You can also check if multiple packages can be found at once, for example to check if both `fmt` and `Eigen3` can be found you can run:
+
+~~~
+cmake-package-check fmt Eigen3
+~~~
+
+
 
 
 ## Contributing

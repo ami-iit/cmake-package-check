@@ -54,3 +54,7 @@ jobs:
     - name: Run the Python tests
       shell: bash -l {0}
       run: pytest
+
+    - name: Check command line test works (Threads CMake package always exists)
+      shell: bash -l {0}
+      run: cmake-package-check Threads
