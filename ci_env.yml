@@ -10,3 +10,4 @@ dependencies:
   - python
   - pip
   - pytest
+  - jinja2
