@@ -1,0 +1,12 @@
+name: testenv
+channels:
+  - conda-forge
+dependencies:
+  - cmake
+  - compilers
+  - make
+  - ninja
+  - pkg-config
+  - python
+  - pip
+  - pytest

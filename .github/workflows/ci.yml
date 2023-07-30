@@ -1,0 +1,56 @@
+name: C++ CI Workflow
+
+on:
+  push:
+  pull_request:
+  schedule:
+  # * is a special character in YAML so you have to quote this string
+  # Execute a "nightly" build at 2 AM UTC
+  - cron:  '0 2 * * *'
+
+jobs:
+  build-with-conda-dependencies:
+    name: '[conda:${{ matrix.os }}]'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Release]
+        os: [ubuntu-22.04, macos-latest, windows-2019]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Print used environment (no conda) [Conda]
+      shell: bash
+      run: |
+        env
+
+    - uses: mamba-org/setup-micromamba@v1
+      with:
+        environment-file: ci_env.yml
+
+    - name: Configure VS Toolchain (Windows)
+      if: contains(matrix.os, 'windows')
+      uses: ilammy/msvc-dev-cmd@v1.12.1
+
+    - name: Setup compilation env variables [Conda/Windows]
+      if: contains(matrix.os, 'windows')
+      shell: bash -l {0}
+      run: |
+        bash_vc_install=${VCToolsInstallDir//\\//}
+        compiler_path=${bash_vc_install}bin/Hostx64/x64/cl.exe
+        echo "CC=${compiler_path}" >> $GITHUB_ENV
+        echo "CXX=${compiler_path}" >> $GITHUB_ENV
+
+    - name: Install the package
+      shell: bash -l {0}
+      run: python -m pip install --no-deps .
+
+    - name: Import the package
+      shell: bash -l {0}
+      run: python -c "import cmake_package_check"
+
+    - name: Run the Python tests
+      shell: bash -l {0}
+      run: pytest
