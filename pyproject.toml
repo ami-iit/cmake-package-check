@@ -4,6 +4,7 @@ requires = [
     "wheel",
     "setuptools>=45",
     "setuptools_scm[toml]>=6.2",
+    "jinja2"
 ]
 
 [tool.setuptools_scm]
