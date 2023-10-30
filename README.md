@@ -4,6 +4,15 @@ Command line utility to check if a CMake package exists.
 
 ## Installation
 
+### From conda-forge
+
+`cmake-package-check` is avalable in conda-forge, so it can be installed simply with:
+~~~
+conda install -c conda-forge cmake-package-check
+~~~
+
+### From source
+
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install cmake-package-check.
 
 ```bash
@@ -34,10 +43,23 @@ The command output will end with `cmake-package-check: SUCCESS.` if the package 
 
 You can also check if multiple packages can be found at once, for example to check if both `fmt` and `Eigen3` can be found you can run:
 
-~~~
+~~~bash
 cmake-package-check fmt Eigen3
 ~~~
 
+### Use to test in conda recipes if a CMake package is installed
+
+`cmake-package-check` can be used to quickly check in the test section of a conda recipe if a given CMake package is installed. 
+For example, if you have a package that installs a CMake package called `CMakePackage`, you can check if the CMake package can be correctly found by adding to your recipe:
+~~~yaml
+    test:
+      commands:
+        - cmake-package-check CMakePackage
+      requires:
+        - cmake-package-check
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+~~~
 
 
 
