@@ -52,16 +52,14 @@ cmake-package-check fmt Eigen3
 `cmake-package-check` can be used to quickly check in the test section of a conda recipe if a given CMake package is installed. 
 For example, if you have a package that installs a CMake package called `CMakePackage`, you can check if the CMake package can be correctly found by adding to your recipe:
 ~~~yaml
-    test:
-      commands:
-        - cmake-package-check CMakePackage
-      requires:
-        - cmake-package-check
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+test:
+  commands:
+    - cmake-package-check CMakePackage
+  requires:
+    - cmake-package-check
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
 ~~~
-
-
 
 ## Contributing
 
