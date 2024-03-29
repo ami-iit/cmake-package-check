@@ -3,4 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 project(CMakePackageCheckTestCMakeProject)
 {% for CMakePackageName in CMakePackageNames %}
 find_package({{ CMakePackageName }} REQUIRED)
+{% if not disable_double_find %}
+find_package({{ CMakePackageName }} REQUIRED)
+{% endif %}
 {% endfor %}
