@@ -37,6 +37,8 @@ cmake-package-check fmt
 
 The command output will end with `cmake-package-check: SUCCESS.` if the package can be found (i.e. `find_package(fmt REQUIRED)` is successful), and with `cmake-package-check: FAILURE.` . In case of success the return value of the command will be 0, while it will be 1 if the package can't be found. This permits to use the command in the context of continuous integration scripts.
 
+Note that by default `cmake-package-check` calls `find_package` two times, to detect subtle bugs related that sometime happens with complex CMake config files. If you want to disable this behaviour, pass the `--disable-double-find` flag.
+
 **Note: on Windows, the command needs to run in Developer Command Prompt or Developer Powershell.**
 
 ### Check if a multiple packages exist
@@ -49,7 +51,7 @@ cmake-package-check fmt Eigen3
 
 ### Use to test in conda recipes if a CMake package is installed
 
-`cmake-package-check` can be used to quickly check in the test section of a conda recipe if a given CMake package is installed. 
+`cmake-package-check` can be used to quickly check in the test section of a conda recipe if a given CMake package is installed.
 For example, if you have a package that installs a CMake package called `CMakePackage`, you can check if the CMake package can be correctly found by adding to your recipe:
 ~~~yaml
 test:
