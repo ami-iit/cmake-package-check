@@ -5,7 +5,7 @@ import tempfile
 from jinja2 import Template, Environment, PackageLoader
 import argparse
 
-def cmake_package_check(CMakePackageNames, disable_double_find):
+def cmake_package_check(CMakePackageNames, disable_double_find=False):
     temp_dir = tempfile.mkdtemp()
 
     try:
