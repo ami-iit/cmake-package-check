@@ -7,3 +7,11 @@ find_package({{ CMakePackageName }} REQUIRED)
 find_package({{ CMakePackageName }} REQUIRED)
 {% endif %}
 {% endfor %}
+
+# Create dummy executable
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/cmake_package_check_dummy_executable.cpp "int main() {return 0;}")
+add_executable(cmake_package_check_dummy_executable ${CMAKE_CURRENT_BINARY_DIR}/cmake_package_check_dummy_executable.cpp)
+
+{% for target in targets %}
+target_link_libraries(cmake_package_check_dummy_executable PRIVATE {{ target }})
+{% endfor %}

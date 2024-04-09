@@ -5,14 +5,20 @@ import tempfile
 from jinja2 import Template, Environment, PackageLoader
 import argparse
 
-def cmake_package_check(CMakePackageNames, disable_double_find=False):
+def cmake_package_check(CMakePackageNames, targets=[], disable_double_find=False):
     temp_dir = tempfile.mkdtemp()
+
+    if targets is None:
+        used_targets = []
+    else:
+        used_targets = targets
 
     try:
         # Prepare context for Jinja2 template
         context = {
             'CMakePackageNames': CMakePackageNames,
-            'disable_double_find': disable_double_find
+            'disable_double_find': disable_double_find,
+            'targets': used_targets
         }
 
         # Render CMakeLists.txt from the Jinja2 template
@@ -47,10 +53,11 @@ def cmake_package_check(CMakePackageNames, disable_double_find=False):
 def main():
     parser = argparse.ArgumentParser(description="Utility to check if a CMake package exists.")
     parser.add_argument("CMakePackageNames", metavar="CMakePackageNames", type=str, nargs="+", help="Names of the cmake packages to check the existence")
+    parser.add_argument("--targets", metavar="targets", type=str, nargs="*",  help="Specify also the CMake imported target that should be checked.")
     parser.add_argument("--disable-double-find", action="store_true", help="By default cmake-package-check calls find_package two times for each package, to detect subtle bugs related to double calls to find_package. This can be disable with these option.")
 
     args = parser.parse_args()
-    result = cmake_package_check(args.CMakePackageNames, disable_double_find=args.disable_double_find)
+    result = cmake_package_check(args.CMakePackageNames, targets=args.targets, disable_double_find=args.disable_double_find)
 
     print("===================================")
     print("=== Result:")
