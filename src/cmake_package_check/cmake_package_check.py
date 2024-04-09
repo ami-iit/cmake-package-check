@@ -52,7 +52,7 @@ def main():
     parser.add_argument("--disable-double-find", action="store_true", help="By default cmake-package-check calls find_package two times for each package, to detect subtle bugs related to double calls to find_package. This can be disable with these option.")
 
     args = parser.parse_args()
-    result = cmake_package_check(args.CMakePackageNames, targets=targets, disable_double_find=args.disable_double_find)
+    result = cmake_package_check(args.CMakePackageNames, targets=args.targets, disable_double_find=args.disable_double_find)
 
     print("===================================")
     print("=== Result:")
