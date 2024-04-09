@@ -8,12 +8,17 @@ import argparse
 def cmake_package_check(CMakePackageNames, targets=[], disable_double_find=False):
     temp_dir = tempfile.mkdtemp()
 
+    if targets is None:
+        used_targets = []
+    else:
+        used_targets = targets
+
     try:
         # Prepare context for Jinja2 template
         context = {
             'CMakePackageNames': CMakePackageNames,
             'disable_double_find': disable_double_find,
-            'targets': targets
+            'targets': used_targets
         }
 
         # Render CMakeLists.txt from the Jinja2 template
