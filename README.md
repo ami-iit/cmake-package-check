@@ -49,6 +49,14 @@ You can also check if multiple packages can be found at once, for example to che
 cmake-package-check fmt Eigen3
 ~~~
 
+### Check if a target is defined by a package and is linkable
+
+You can also check if a one or more targets are defined and can be passed to `target_link_libraries` by specifying the `--targets` otpion:
+
+~~~bash
+cmake-package-check Eigen3 --targets Eigen3::Eigen
+~~~
+
 ### Use to test in conda recipes if a CMake package is installed
 
 `cmake-package-check` can be used to quickly check in the test section of a conda recipe if a given CMake package is installed.
